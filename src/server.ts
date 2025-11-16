@@ -36,7 +36,7 @@ const contactFormSchema = z.object({
   name: z.string().min(2, {
     message: "Name must be at least 2 characters.",
   }),
-  email: z.string().email({
+  email: z.email({
     message: "Please enter a valid email address.",
   }),
   phone: z.string().min(10, {
@@ -219,7 +219,7 @@ app.post("/api/contact", async (req: Request, res: Response) => {
     const mailOptions = {
       from: process.env.GMAIL_USER,
       to: process.env.CONTACT_FORM_RECIPIENT || process.env.GMAIL_USER,
-      subject: `New Contact Form Submission: ${contactAbout}`,
+      subject: `New Contact Form Submission: ${name} ${email}`,
       html: `
         <h2>New Contact Form Submission</h2>
         <p><strong>Name:</strong> ${name}</p>
